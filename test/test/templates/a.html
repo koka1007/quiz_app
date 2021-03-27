@@ -1,0 +1,48 @@
+{%extends "layout.html"%}
+{%block content%}
+<p><button id="append">追加</button></p>
+<p><button id="set">更新</button></p>
+<p><button id="reset">リセット</button></p>
+<hr>
+<div id="result"></div>
+<hr>
+<p><button id="send">ajax通信で送信</button></p>
+<hr>
+<textarea rows="15" id="fuga">ajax通信の結果</textarea>
+<script>
+var formData = new FormData() ;
+var xhr = new XMLHttpRequest() ;
+getFormDataInfo() ;
+xhr.onloadend = function ( event ) {
+    console.log( xhr ) ;
+    document.getElementById( "fuga" ).value = xhr.response ;
+}
+document.getElementById( "append" ).onclick = function () {
+    formData.append( "name", "あらゆ" ) ;
+    getFormDataInfo() ;
+}
+document.getElementById( "set" ).onclick = function () {
+    formData.set( "name", "SYNCER" ) ;
+    getFormDataInfo() ;
+}
+document.getElementById( "reset" ).onclick = function () {
+    formData = new FormData() ;
+    getFormDataInfo() ;
+}
+document.getElementById( "send" ).onclick = function () {
+    xhr.open( "POST", "/" ) ;
+    xhr.send( formData ) ;
+}
+function getFormDataInfo () {
+    document.getElementById( "result" ).textContent = "" ;
+    console.log( formData ) ;
+    appendText( formData + "\n" ) ;
+    formData.forEach( function ( value, name ) {
+        appendText( name + ": " + value + "\n" ) ;
+    } ) ;
+}
+function appendText ( text ) {
+    document.getElementById( "result" ).appendChild( document.createTextNode( text ) ) ;
+}
+</script>
+{%endblock%}

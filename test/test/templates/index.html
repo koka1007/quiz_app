@@ -1,0 +1,51 @@
+{%extends "layout.html"%}
+{%block head%}
+        <link rel="stylesheet" href="{{url_for('static', filename='css/start.css')}}">
+{%endblock%}
+{%block content%}
+
+        <body>
+            <div class="container gradient-purple-blue">
+              <div class="under-container bubble" style="height:90vh;">
+                <div class="line">
+                  <div class="square" id="square">S</div>
+                  <div class="square" >a</div>
+                  <div class="square" >l</div>
+                  <div class="square" >e</div>
+                  <div class="square" >s</div>
+                  <div class="square" >f</div>
+                  <div class="square" >o</div>
+                  <div class="square" >r</div>
+                  <div class="square" >c</div>
+                  <div class="square" >e</div>
+                </div>
+                <div class="line">
+                  <div class="square" >ア</div>
+                  <div class="square" >ド</div>
+                  <div class="square" >ミ</div>
+                  <div class="square" >ン</div>
+                  <div class="square" style="margin-left:30px;">試</div>
+                  <div class="square" >験</div>
+                  <div class="square" >対</div>
+                  <div class="square" >策</div>
+                </div>
+              </div>
+              <form action="{{url_for('main2')}}" method="POST" class="content">
+                <div class="button_container">
+                <div class="button_su">
+
+                    <span class="button_su_inner">
+                        <input class="button_text_container" type="text" id="name" name="name" placeholder="名前" required>	
+                        <input type="submit" value="問題開始">
+                    </span>
+                </div>
+                </div>    
+              </form> 
+            </div>    
+          </body>
+    </html>
+
+
+
+
+{%endblock%}

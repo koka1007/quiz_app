@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{%block head%}
+        <link rel="stylesheet" href="{{url_for('static', filename='css/result.css')}}">
+{%endblock%}
+{% block content %}
+    <h1>{{ mondai }}さんの成績です。</h1>
+    <div class="abc">
+        {%for i in answer%}
+        <div class="box">
+            {{loop.index}}.<span id="iii">{{i}}</span>
+        </div>    
+            
+            
+           
+        
+        {%endfor%}
+    </div>
+    <p>得点は{{ total }}点</p>
+    <p>{{total | judge(leng)}}</p>
+
+
+    <p><a href="{{url_for('top')}}">topに戻る</a></p>
+{% endblock %}

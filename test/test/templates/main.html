@@ -1,0 +1,180 @@
+{%extends "layout.html"%}
+{%block head%}
+        <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+{%endblock%}
+{%block content%}
+<div class="container gradient-purple-blue">
+    <div class="under-container bubble" style="height:90vh;">
+        <div class="timer">
+                制限時間:<span id="time"></span>
+        </div>
+        <div class="quiz-content">
+            
+            <div class="mondai-content">
+                <div id="midasi">{{mondai}}</div>
+                <div id="mondai">{{list1[0]}}</div>
+            </div>
+            <div class="sentaku-content">
+                <form action="{{url_for('main1')}}" method="POST" id="form">
+                    <div id="midasi">{{sentaku}}</div>
+                <ul>
+                    {%for numnum in list1[3:len]%}
+                    <li>
+                    {%if list1[1] == 2%}
+                    
+                    <div id="sentakusi">
+                        <input id="answer" type="checkbox" name="chk" value={{loop.index}}>{{numnum}}
+                    </div>  
+                    <!-- チェックの値は総和で確認する -->
+                    
+                    {%else%}
+                    <div id="sentakusi">
+                        <input id="answer" type="radio" name="anse" value={{loop.index}} required>{{numnum}}
+                    </div>
+                    {%endif%}
+                    </li>
+                    {%endfor%}
+                </ul>
+                <div id="bottun">
+                    {%if(flag)%}
+                    <!-- {%set flag = False%} -->
+                    <input type="submit" formaction="{{url_for('result')}}" value="採点">
+                    {%else%}
+                    <input type="submit" value="次の問題へ">
+                    {% endif %}
+                </div>
+                </form>
+            </div>
+        </div>        
+    </div>
+</div>
+
+     <script type="text/javascript">
+
+        /*const time1 = 1;
+        const time2 = 60;
+        const time3 = 60;
+        const oldTime = Date.now();
+
+        const timeId = setInterval(() => {
+        const currentTime = Date.now();
+
+        // 差分を求める
+        const diff = currentTime - oldTime;
+
+        const diffSec = time3 - diff;
+
+        //ミリ秒を整数に変換
+        const remainSec = Math.ceil(diffSec / 1000);
+
+        let text = `残り${time1}:${time2}:${remainSec}`;
+
+        // 0秒以下になったら
+        if (diffSec < 1 && time2 > 0 ) {
+            time2--;
+
+        }else{
+            clearInterval(timeId);
+
+            // タイマー終了の文言を表示する
+            text = "終了";
+        }
+
+        // 画面に表示する
+        document.querySelector('#text').innerHTML = text;
+})
+*/
+        let round = {{num|tojson}};
+        console.log(round);
+        let hour;
+        let minute;
+        let second;
+
+        if(round == 0){
+            hour = 0;
+            minute = 30;
+            second = 10;
+        }else{
+            hour=window.sessionStorage.getItem(['limit_hour']);
+            minute=window.sessionStorage.getItem(['limit_minute']);
+            second=window.sessionStorage.getItem(['limit_second']);
+
+        }
+
+        var time = document.getElementById('time');
+
+        const countDown = () =>{
+            if(second >0) {
+                second--;
+            }else if(minute > 0 && second < 1){
+                minute--;
+                second = 59;
+                console.log(minute);
+            }else if(minute < 1 && hour > 0){
+                minute = 59;
+                hour--;
+            }
+            
+        }
+
+        const intervalId = setInterval(() =>{
+            time.innerHTML = '<span>'+hour+':'+minute+':'+second+'</span>';
+            window.sessionStorage.setItem(['limit_hour'],[hour]);
+            window.sessionStorage.setItem(['limit_minute'],[minute]);
+            window.sessionStorage.setItem(['limit_second'],[second]); 
+            countDown();
+            if(second <= 0 && minute <= 0 && hour <= 0){
+            
+            setTimeout(function(){
+    　
+            clearInterval(intervalId);　//intervalIdをclearIntervalで指定している
+            window.location.href = '/timeup';
+            },2000)
+            }}, 1000);
+
+    </script>
+    
+
+{% endblock %}
+
+
+
+
+
+
+    <!--
+    <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+    <a class="nav-link" href="#home"
+        data-toggle="tab" role="tab">1</a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link" href="#middle"
+        data-toggle="tab" role="tab">2</a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link" href="#finish"
+        data-toggle="tab" role="tab">3</a>
+    </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade" id="home"
+            role="tabpanel">
+            11111
+        </div>
+        <div class="tab-pane fade" id="middle"
+            role="tabpanel">
+            222222
+        </div>
+        <div class="tab-pane fade" id="finish"
+            role="tabpanel">
+            <div class="card">
+                <div class="card-body">
+                <h5 class="card-title">card</h5>
+                <p class="card-text"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+-->
